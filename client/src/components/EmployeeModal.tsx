@@ -15,7 +15,7 @@ const formSchema = z.object({
     fullName: z.string().min(2, { message: 'ФИО должно содержать минимум 2 символа' }),
     specialization: z.string().min(2, { message: 'Должность должна содержать минимум 2 символа' }),
     phone: z.string().min(11, { message: 'Телефон должен содержать минимум 11 цифр' }),
-    telegramId: z.string().optional(), // если telegramId не обязателен
+    telegramId: z.string().min(8, { message: 'Telegram ID должен содержать минимум 8 символа' }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
