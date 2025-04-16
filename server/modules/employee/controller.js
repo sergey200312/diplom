@@ -1,3 +1,4 @@
+const specialization = require('../../enums/specialization');
 const service = require('./service');
 
 const create = async (req, res) => {
@@ -11,7 +12,8 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const employees = await service.getAll(req.query);
+        const { page = 1, pageSize = 2, searchTerm, specialization = '' } = req.query;
+        const employees = await service.getAll({ page, pageSize, searchTerm, specialization });
         res.status(200).json(employees);
     } catch (error) {
         res.status(400).json({ message: error.message });

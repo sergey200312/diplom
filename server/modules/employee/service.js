@@ -16,8 +16,8 @@ const create = async (employee) => {
 }
 
 
-const getAll = async (filter) => {
-    const { searchTerm } = filter;
+const getAll = async (params) => {
+    const { page = 1, pageSize = 2, searchTerm, specialization } = params;
     const where = {};
 
     if (searchTerm?.trim()) {
@@ -30,8 +30,25 @@ const getAll = async (filter) => {
     }
 
 
-    const employees = await Employee.findAll({ where });
-    return employees;
+    if (specialization && specialization.length) {
+        console.log(specialization)
+        where.specialization = {
+            [Op.eq]: specialization,
+        }
+    }
+
+
+    const employees = await Employee.findAll({ 
+        where,
+        limit: pageSize,
+        offset: (page - 1) * pageSize
+    });
+
+    console.log(employees)
+
+    const totalCount = await Employee.count({ where });
+
+    return { totalCount, employees }
 };
 
 
