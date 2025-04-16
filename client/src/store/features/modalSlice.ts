@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IEmployee } from './../../src/types/employee';
+import { IEmployee } from '../../types/employee';
 interface IModalState {
     isOpen: boolean,
     type: 'createEmployee' | 'editEmployee' | null,

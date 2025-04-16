@@ -6,7 +6,7 @@ import { useLoginMutation } from '../../store/api/authApi'
 import { toast } from 'react-toastify'
 import { handleApiError } from '../utils/handleApiError'
 import { useDispatch } from 'react-redux'
-import { login as authLogin } from '../../store/features/authSlice'
+import { login as authLogin } from '../store/features/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../router/constants'
 

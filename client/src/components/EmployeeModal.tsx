@@ -4,9 +4,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { X, User, Phone, Briefcase, Send } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/createStore';
-import { closeEmployeeModal } from '../../store/features/modalSlice';
-import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../../store/api/employeeApi';
+import { RootState } from '../store/createStore';
+import { closeEmployeeModal } from '../store/features/modalSlice';
+import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../store/api/employeeApi';
 import { toast } from 'react-toastify';
 import { handleApiError } from '../utils/handleApiError';
 

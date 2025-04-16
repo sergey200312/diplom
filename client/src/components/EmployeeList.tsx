@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useGetAllEmployeeQuery } from '../../store/api/employeeApi';
+import { useGetAllEmployeeQuery } from '../store/api/employeeApi';
 import EmployeeItem from './EmployeeItem';
 import { IEmployee } from '../types/employee';
 

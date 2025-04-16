@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 import UserAvatar from '../assets/user_12533276.png'
 import { IEmployee } from '../types/employee';
-import { useDeleteEmployeeMutation } from '../../store/api/employeeApi';
+import { useDeleteEmployeeMutation } from '../store/api/employeeApi';
 import { useDispatch } from 'react-redux';
-import { openEditEmployeeModal } from '../../store/features/modalSlice';
+import { openEditEmployeeModal } from '../store/features/modalSlice';
 
 interface EmployeeItemProps {
   employee: IEmployee

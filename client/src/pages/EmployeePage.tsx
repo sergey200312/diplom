@@ -4,12 +4,12 @@ import { MainLayout } from '../layout/MainLayout'
 
 import { EmployeeList } from '../components/EmployeeList'
 import useInput from '../hooks/useInput'
-import { useGetAllEmployeeQuery } from '../../store/api/employeeApi'
+import { useGetAllEmployeeQuery } from '../store/api/employeeApi'
 import useDebounce from '../hooks/useDebounce'
 import EmployeeModal from '../components/EmployeeModal'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../store/createStore'
-import { openCreateEmployeeModal } from '../../store/features/modalSlice'
+import { RootState } from '../store/createStore'
+import { openCreateEmployeeModal } from '../store/features/modalSlice'
 
 
 

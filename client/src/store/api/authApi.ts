@@ -1,5 +1,5 @@
 
-import { ILoginUser } from "../../src/types/auth";    
+import { ILoginUser } from "../../types/auth";
 import { baseApi } from "./baseApi";
 
 
