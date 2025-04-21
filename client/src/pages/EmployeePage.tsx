@@ -62,7 +62,7 @@ export const EmployeePage: FC = () => {
             value={selectedSpecialization}
             onChange={handleChangeSpecialization}>
               <option value='' disabled hidden>Специализация</option>
-              <option value='Газовик'>Газовик</option>
+              <option value='Газосварщик'>Газосварщик</option>
             </select>
         </div>
 

@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { X, User, Phone, Briefcase, Send } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/createStore';
-import { closeEmployeeModal } from '../store/features/modalSlice';
+import { closeModal } from '../store/features/modalSlice';
 import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../store/api/employeeApi';
 import { toast } from 'react-toastify';
 import { handleApiError } from '../utils/handleApiError';
@@ -42,18 +42,19 @@ const EmployeeModal: FC = () => {
     });
 
     const onSubmit = async (values: FormValues) => {
+        
         try {
             switch (type) {
                 case 'createEmployee':
                     await createEmployee(values).unwrap();
                     toast.success('Сотрудник успешно добавлен');
-                    dispatch(closeEmployeeModal());
+                    dispatch(closeModal());
                     break;
                 case 'editEmployee':
                     console.log(employeeData?.id)
                     await updateEmployee({ id: employeeData?.id, ...values }).unwrap();
                     toast.success('Сотрудник успешно обновлен');
-                    dispatch(closeEmployeeModal());
+                    dispatch(closeModal());
                     break;
             }
         } catch (error) {
@@ -63,7 +64,7 @@ const EmployeeModal: FC = () => {
 
     const handleClose = () => {
         reset();
-        dispatch(closeEmployeeModal());
+        dispatch(closeModal());
     };
 
     if (!isOpen) return null;

@@ -3,7 +3,7 @@ import { RootState } from '../createStore'
 
 export const baseApi = createApi({
     reducerPath: 'baseApi',
-    tagTypes: ['Employee'],
+    tagTypes: ['Employee', 'Brigade'],
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_BASE_API_URL,
         prepareHeaders: (headers, { getState }) => {
