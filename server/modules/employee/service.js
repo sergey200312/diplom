@@ -1,5 +1,4 @@
-const { get } = require("http");
-const specialization = require("../../enums/specialization");
+
 const { Employee } = require("../../models")
 const { Op } = require('sequelize');
 
@@ -33,7 +32,7 @@ const getAll = async (params) => {
     if (specialization && specialization.length) {
         console.log(specialization)
         where.specialization = {
-            [Op.eq]: specialization,
+            [Op.in]: [specialization],
         }
     }
 
@@ -51,7 +50,21 @@ const getAll = async (params) => {
     return { totalCount, employees }
 };
 
+const getAllPlain = async () => {
+    const employees = await Employee.findAll()
 
+    if (!employees.length) {
+        throw new Error('Сотрудники не найдены')
+    }
+
+    const availableEmployees = employees.filter(e => e.brigadeId === null)
+
+    if (!availableEmployees.length) {
+        throw new Error('Все сотрудники заняты')
+    }
+
+    return availableEmployees
+}
 
 const deleteId = async (id) => {
     const employee = await Employee.findByPk(id)
@@ -90,5 +103,6 @@ module.exports = {
     getAll,
     deleteId,
     getById,
-    update
+    update,
+    getAllPlain
 }

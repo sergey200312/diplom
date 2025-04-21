@@ -1,4 +1,3 @@
-// models/Employee.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const specialization = require('../enums/specialization');
@@ -22,7 +21,15 @@ const Employee = sequelize.define('Employee', {
           specialization.LOCKSMITH
         ),
         allowNull: true
-    }
+    },
+    brigadeId: { 
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Brigade', 
+          key: 'id'
+        }
+      }
 }, {
     timestamps: true,
 });

@@ -31,20 +31,44 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-sequelize.authenticate() 
+
+
+sequelize.authenticate()
   .then(() => {
-    console.log('✅ Подключение к БД успешно');
-    return sequelize.sync({ alter: true});  
+    console.log('✅ Подключение к БД успешно установлено');
+    
+    // Опции синхронизации:
+    const syncOptions = {
+      // alter: true - осторожно! Может изменять структуру таблиц
+      alter: process.env.NODE_ENV === 'development', // только в разработке
+      // force: false - никогда не используйте force в production!
+      logging: console.log // для отладки SQL-запросов
+    };
+    
+    return sequelize.sync(syncOptions);
   })
   .then(() => {
-    console.log('База данных синхронизирована');
+    console.log('🔄 Модели успешно синхронизированы с БД');
+    
+    // Проверяем, какие таблицы были созданы/изменены
+    return sequelize.query("SELECT table_name FROM information_schema.tables WHERE table_schema='public'");
+  })
+  .then(([results]) => {
+    console.log('📊 Доступные таблицы в БД:');
+    console.log(results.map(r => r.table_name).join(', '));
   })
   .catch(err => {
-    console.error('❌ Ошибка подключения или синхронизации:', err);
+    console.error('❌ Ошибка подключения или синхронизации:');
+    console.error('Сообщение:', err.message);
+    console.error('Код ошибки:', err.parent?.code || 'N/A');
+    console.error('SQL запрос:', err.sql || 'N/A');
+    
+    // Для критических ошибок можно завершить процесс
+    if (process.env.NODE_ENV === 'production') {
+      process.exit(1);
+    }
   });
 
-
-// error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;

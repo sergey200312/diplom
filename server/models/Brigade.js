@@ -1,26 +1,19 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
 
-module.exports = (sequelize, DataTypes) => {
-  const Brigade = sequelize.define('Brigade', {
-    name: {
+// Brigade.js
+const Brigade = sequelize.define('Brigade', {
+  name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    description: {
+  },
+  description: {
       type: DataTypes.TEXT,
       allowNull: true
-    }
-  }, {
-    tableName: 'brigades'
-  });
+  }
+});
 
-  Brigade.associate = function(models) {
-    Brigade.hasMany(models.Employee, {
-      foreignKey: 'brigadeId',
-      as: 'employees'
-    });
-  };
+// Ассоциации
 
-  return Brigade;
-};
+
+module.exports = Brigade;

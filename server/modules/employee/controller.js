@@ -20,6 +20,15 @@ const getAll = async (req, res) => {
     }
 };
 
+const getAllPlain = async (req, res) => {
+    try {
+        const employees = await service.getAllPlain();
+        res.status(200).json(employees);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 const deleteId = async (req, res) => {
     try {
         const employee = await service.deleteId(req.params.id);
@@ -52,5 +61,6 @@ module.exports = {
     getAll,
     deleteId,
     getById,
-    update
+    update,
+    getAllPlain
 }   

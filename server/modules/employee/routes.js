@@ -8,11 +8,14 @@ router.post('/', employeeValidator, validate, employeeController.create);
 
 router.get('/', employeeController.getAll )
 
+router.get('/plain', employeeController.getAllPlain)
+
 router.get('/:id', employeeController.getById)
 
 router.delete('/:id', employeeController.deleteId)
 
 router.put('/:id', employeeController.update)
+
 
 
 module.exports = router;
