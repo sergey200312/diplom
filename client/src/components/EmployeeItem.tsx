@@ -6,6 +6,7 @@ import { useDeleteEmployeeMutation } from '../store/api/employeeApi';
 import { useDispatch } from 'react-redux';
 import { openEditEmployeeModal } from '../store/features/modalSlice';
 
+
 interface EmployeeItemProps {
   employee: IEmployee
 }

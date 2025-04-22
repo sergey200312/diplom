@@ -3,5 +3,5 @@ export interface IEmployee {
     fullName: string;
     specialization: string;
     phone: string;
-    telegramId: string
+    telegramId?: string
   }

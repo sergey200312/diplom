@@ -23,10 +23,10 @@ export const EmployeeList: FC<EmployeeListProps> = ({ employees, isLoading }) =>
       <table className="min-w-full table-auto">
         <thead className="bg-gray-100 text-left text-gray-700 text-sm uppercase">
           <tr>
-            <th className="px-6 py-3">ФИО</th>
-            <th className="px-6 py-3">Должность</th>
-            <th className="px-6 py-3">Телефон</th>
-            <th className="px-6 py-3">Действия</th>
+            <th className="px-6 py-3 w-1/4">ФИО</th>
+            <th className="px-6 py-3  w-1/4">Должность</th>
+            <th className="px-6 py-3  w-1/4">Телефон</th>
+            <th className="px-6 py-3  w-1/4">Действия</th>
           </tr>
         </thead>
         <tbody className="text-sm text-gray-900">

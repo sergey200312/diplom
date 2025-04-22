@@ -40,7 +40,7 @@ export const LoginPage: FC = () => {
       const { token, _id, email, avatar_url } = response
       dispatch(authLogin({ token, _id, email }))
       toast.success('Вы успешно вошли в аккаунт')
-      navigate(ROUTES.MAIN)
+      navigate(ROUTES.EMPLOYEES)
     } catch (error) {
       handleApiError(error)
     }

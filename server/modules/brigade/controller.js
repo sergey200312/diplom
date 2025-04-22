@@ -12,7 +12,7 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const brigades = await service.getAll();    
+        const brigades = await service.getAll(req.query);    
         res.status(200).json(brigades);
     } catch (error) {        
         res.status(400).json({ message: error.message });

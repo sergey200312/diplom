@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store/createStore'
 import { openCreateEmployeeModal } from '../store/features/modalSlice'
 import ReactPaginate from 'react-paginate'
+import { Paginate } from '../components/Paginate'
 
 export const EmployeePage: FC = () => {
   const searchTerm = useInput('')
@@ -28,9 +29,11 @@ export const EmployeePage: FC = () => {
       specialization: selectedSpecialization
     })
 
-  const handlePageClick = (selectedItem: { selected: number }) => {
-    setPage(selectedItem.selected)
-  }
+  useEffect(() => {
+    setPage(0)
+  }, [selectedSpecialization])
+
+  
 
   const handleChangeSpecialization = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedSpecialization(e.target.value)
@@ -63,6 +66,7 @@ export const EmployeePage: FC = () => {
             onChange={handleChangeSpecialization}>
               <option value='' disabled hidden>Специализация</option>
               <option value='Газосварщик'>Газосварщик</option>
+              <option value='Слесарь'>Слесарь</option>
             </select>
         </div>
 
@@ -73,23 +77,8 @@ export const EmployeePage: FC = () => {
 
         <div className="flex items-center gap-3 mt-6">
           <div><p>Найдено сотрудников: {response.totalCount}</p></div>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel="Следующая >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            pageCount={Math.ceil(response.totalCount / pageSize)}
-            previousLabel="< Предыдущая"
-            renderOnZeroPageCount={null}
-            forcePage={page}
-            containerClassName="flex justify-center gap-2"
-            pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
-            activeClassName="bg-blue-500 text-white"
-            previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
-            nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
-            disabledClassName="opacity-50 cursor-not-allowed"
-            breakClassName="px-3 py-1"
-          />
+          <Paginate page={page} pageSize={pageSize} response={response}  setPage={setPage} />
+          
         </div>
       </div>
 

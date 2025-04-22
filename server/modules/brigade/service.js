@@ -30,7 +30,7 @@ const create = async (team) => {
     }
 
     const newBrigade = await Brigade.create({
-      name: team.name || `Бригада ${new Date().toLocaleDateString()}`,
+      name: team.name || `Бригада ${await Brigade.count() + 1}`,
       description: team.description || null
     });
 
@@ -53,21 +53,26 @@ const create = async (team) => {
   }
 };
 
-const getAll = async () => {
+const getAll = async (params) => {
+  const { page = 1, pageSize = 1 } = params
   try {
     const brigades = await Brigade.findAll({
       include: [{
         model: Employee,
         as: 'Employees',
         attributes: ['id', 'fullName', 'phone', 'specialization'] 
-      }]
+      }],
+      limit: pageSize,
+      offset: (page - 1) * pageSize
     })
 
     if (!brigades.length) {
       throw new Error('Бригады не найдены')
     }
 
-    return brigades
+    const totalCount = await Brigade.count()
+
+    return { brigades, totalCount }
   } catch (error) {
     console.error('Ошибка получения бригад:', error);
     throw error

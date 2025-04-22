@@ -124,7 +124,7 @@ const RequestManagementPage = () => {
 
   return (
     <MainLayout>
-    <div className="bg-gray-50 min-h-screen p-6">
+    <div className=" min-h-screen p-6">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-2xl font-bold text-gray-800 mb-6">ГазСервис - Управление заявками</h1>
         

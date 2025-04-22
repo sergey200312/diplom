@@ -11,9 +11,10 @@ export const brigadeApi = baseApi.injectEndpoints({
             invalidatesTags: ['Brigade']
         }),
         getAllBrigades: builder.query({
-            query: () => ({
+            query: (params) => ({
                 url: '/brigade',
-                method: 'GET'
+                method: 'GET',
+                params
             }),
             providesTags: ['Brigade']
         })
