@@ -17,11 +17,19 @@ export const brigadeApi = baseApi.injectEndpoints({
                 params
             }),
             providesTags: ['Brigade']
+        }),
+        deleteBrigade: builder.mutation({
+            query: (id) => ({
+                url: `/brigade/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Brigade']
         })
     })
 })
 
 export const { 
     useCreateBrigadeMutation,
-    useGetAllBrigadesQuery
+    useGetAllBrigadesQuery,
+    useDeleteBrigadeMutation
 } = brigadeApi

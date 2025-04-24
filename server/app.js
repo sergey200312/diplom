@@ -9,6 +9,7 @@ const passport = require('passport');
 require('./config/passport')(passport);
 const routes = require('./modules/index')
 const cors = require('cors');
+const startBot = require('./bot/index')
 
 
 var app = express();
@@ -78,5 +79,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+startBot()
 
 module.exports = app;

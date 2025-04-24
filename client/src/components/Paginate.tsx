@@ -28,8 +28,8 @@ export const Paginate: FC<IPaginateProps> = ({ page, pageSize, response, setPage
             containerClassName="flex justify-center gap-2"
             pageClassName="px-3 py-1 border rounded hover:bg-gray-100"
             activeClassName="bg-blue-500 text-white"
-            previousClassName="px-3 py-1 border rounded hover:bg-gray-100"
-            nextClassName="px-3 py-1 border rounded hover:bg-gray-100"
+            previousClassName="px-3 py-1 border rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            nextClassName="px-3 py-1 border rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             disabledClassName="opacity-50 cursor-not-allowed"
             breakClassName="px-3 py-1"
         />

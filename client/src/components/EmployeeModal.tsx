@@ -14,15 +14,15 @@ import { handleApiError } from '../utils/handleApiError';
 const formSchema = z.object({
     fullName: z.string().min(2, { message: 'ФИО должно содержать минимум 2 символа' }),
     specialization: z.string().min(2, { message: 'Должность должна содержать минимум 2 символа' }),
-    phone: z.string().min(11, { message: 'Телефон должен содержать минимум 11 цифр' }),
-    telegramId: z.string().min(8, { message: 'Telegram ID должен содержать минимум 8 символа' }),
+    phone: z.string().length(11, { message: 'Телефон должен содержать минимум 11 цифр' }),
+    telegramId: z.string().length(8, { message: 'Telegram ID должен содержать минимум 8 символа' }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 const EmployeeModal: FC = () => {
     const dispatch = useDispatch();
-    const { isOpen, type, employeeData } = useSelector((state: RootState) => state.modal);
+    const { isOpen, employeeData, type } = useSelector((state: RootState) => state.modal);
     const [createEmployee] = useCreateEmployeeMutation();
     const [updateEmployee] = useUpdateEmployeeMutation();
 

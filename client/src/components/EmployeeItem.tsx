@@ -4,7 +4,7 @@ import UserAvatar from '../assets/user_12533276.png'
 import { IEmployee } from '../types/employee';
 import { useDeleteEmployeeMutation } from '../store/api/employeeApi';
 import { useDispatch } from 'react-redux';
-import { openEditEmployeeModal } from '../store/features/modalSlice';
+import { openModal } from '../store/features/modalSlice';
 
 
 interface EmployeeItemProps {
@@ -38,7 +38,7 @@ const EmployeeItem: FC<EmployeeItemProps> = ({ employee }) => {
       <td className="px-6 py-4">+{phone}</td>
       <td className="px-6 py-4 flex gap-3 text-blue-600">
         <button>
-          <Pencil className="w-4 h-4" onClick={() => dispatch(openEditEmployeeModal(employee))} />
+          <Pencil className="w-4 h-4" onClick={() => dispatch(openModal({ type: 'editEmployee', employeeData: employee }))}  />
         </button>
         <button className="text-red-600">
           <Trash2 className="w-4 h-4" onClick={() => handleDeleteEmployee(Number(id))} />

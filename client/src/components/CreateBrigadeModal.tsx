@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { handleApiError } from '../utils/handleApiError'
 import useDropdown from '../hooks/useDropdown';
 import { DropdownMenu } from './DropdownMenu';
+import { IEmployee } from '../types/employee';
 // Схема валидации формы
 const formSchema = z.object({
     specialization: z.string().min(1, { message: 'Выберите специализацию' }),
@@ -28,17 +29,19 @@ type FormValues = z.infer<typeof formSchema>;
 
 const CreateBrigadeModal: FC = () => {
     const dispatch = useDispatch();
-    const { isOpen: isOpenModal, type } = useSelector((state: RootState) => state.modal);
-    const [ createBrigade ] = useCreateBrigadeMutation();
+    const { isOpen: isOpenModal} = useSelector((state: RootState) => state.modal);
+    const [createBrigade] = useCreateBrigadeMutation();
     const { data: employees = [] } = useGetAllEmployeePlainQuery({});
     const [teamSize, setTeamSize] = useState<number>(2);
     const [availableEmployees, setAvailableEmployees] = useState<typeof employees>([]);
     const {
         isOpen,
         searchTerm,
+        filteredEmployees,
         handleBlur,
         handleFocus,
-    } = useDropdown(employees || []);
+        handleSelect,
+    } = useDropdown(availableEmployees || []);
 
     const {
         register,
@@ -107,7 +110,7 @@ const CreateBrigadeModal: FC = () => {
 
     const handleAddMember = (employee: typeof employees[0]) => {
         const currentMembers = watch('members');
-        if (currentMembers.length > teamSize + 1 ) {
+        if (currentMembers.length > teamSize + 1) {
             setError('members', {
                 type: 'maxLength',
                 message: `Максимальное количество участников: ${teamSize}`
@@ -127,9 +130,9 @@ const CreateBrigadeModal: FC = () => {
         setAvailableEmployees((prev: any) => prev.filter((emp: any) => emp.id !== employee.id));
     };
 
-     useEffect(() => {
-            console.log('Ошибки формы:', errors);
-          }, [errors]);
+    useEffect(() => {
+        console.log('Ошибки формы:', errors);
+    }, [errors]);
 
     const handleRemoveMember = (employeeId: string) => {
         const currentMembers = watch('members')
@@ -142,7 +145,7 @@ const CreateBrigadeModal: FC = () => {
         }
     };
 
-    if (type !== 'createBrigade') return null;
+
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 backdrop-blur">
@@ -164,7 +167,7 @@ const CreateBrigadeModal: FC = () => {
                                 <DropdownMenu
                                     searchTerm={searchTerm}
                                     isOpen={isOpen}
-                                    filteredEmployees={availableEmployees}
+                                    filteredEmployees={filteredEmployees}
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
                                     onSelect={handleAddMember}

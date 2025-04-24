@@ -79,9 +79,29 @@ const getAll = async (params) => {
   }
 }
 
+const deleteBrigade = async (id) => {
+  try {
+    const brigade = await Brigade.findByPk(id);
+
+    if (!brigade) {
+      throw new Error('Бригада не найдена');
+    }
+
+    await Employee.update({ brigadeId: null }, { where: { brigadeId: id } });
+
+    await brigade.destroy();
+    return brigade;
+
+  } catch (error) {
+    console.error('Ошибка удаления бригады:', error);
+    throw error;
+  }
+};
+
 
 
 module.exports = { 
   create, 
-  getAll
+  getAll,
+  deleteBrigade
 };

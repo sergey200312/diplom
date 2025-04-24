@@ -19,7 +19,18 @@ const getAll = async (req, res) => {
     }
 };
 
+const deleteBrigade = async (req, res) => {
+    console.log(req.params.id)
+    try {
+        const brigade = await service.deleteBrigade(req.params.id);    
+        res.status(200).json(brigade);
+    } catch (error) {        
+        res.status(400).json({ message: error.message });
+    }
+};  
+
 module.exports = { 
     getAll, 
-    create 
+    create,
+    deleteBrigade
 }

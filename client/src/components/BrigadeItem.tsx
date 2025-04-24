@@ -1,6 +1,13 @@
 import { FC, useState } from 'react'
 import { IEmployee } from '../types/employee'
 import { ChevronDown, MoreVertical } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
+import { closeModal, openModal } from '../store/features/modalSlice'
+import { RootState } from '../store/createStore'
+import { ConfirmModal } from './ConfirmModal'
+import { useDeleteBrigadeMutation } from '../store/api/brigadeApi'
+import { toast } from 'react-toastify'
+import { handleApiError } from '../utils/handleApiError'
 
 
 
@@ -16,6 +23,20 @@ interface IBrigadeProps {
 }
 export const BrigadeItem: FC<IBrigadeProps> = ({ team, expandedTeams, toggleTeamExpansion }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const dispatch = useDispatch();
+    const { isOpen } = useSelector((state: RootState) => state.modal);
+    const [ deleteBrigade, { isLoading } ] = useDeleteBrigadeMutation();
+
+    const handleDeleteBrigade = async (id: string) => {
+        try {
+            await deleteBrigade(id).unwrap();
+            toast.success('Бригада успешно удалена');
+            dispatch(closeModal());
+        } catch(error) {
+            handleApiError(error)
+        }
+    }
+
 
     return (
         <div className="border border-gray-200 rounded-lg p-4">
@@ -32,17 +53,15 @@ export const BrigadeItem: FC<IBrigadeProps> = ({ team, expandedTeams, toggleTeam
                     </div>
                     <div className='relative'>
                         <button onMouseEnter={() => setIsMenuOpen(true)}
-                            onMouseLeave={() => setIsMenuOpen(false)}>
+                            onMouseLeave={() => setIsMenuOpen(false)}
+                            className='flex justify-center w-full'>
                             <MoreVertical className='h-5 w-5' />
                             {isMenuOpen && (
                                 <>
-                                    {/* Затемнение фона */}
-
-                                    {/* Меню */}
-                                    <div className="absolute z-10 mt-2 top-full -right-1/2 rounded-md shadow-lg bg-white">
+                                    <div className="absolute z-10 mt-2 transform -translate-1/2 rounded-md shadow-lg bg-white">
                                         <ul className="py-2">
-                                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Редактировать</li>
-                                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Удалить</li>
+                                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => dispatch(openModal({ type: 'editBrigade', brigadeData: team }))}>Редактировать</li>
+                                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => dispatch(openModal({ type: 'confirm' }))}>Удалить</li>
                                         </ul>
                                     </div>
                                 </>
@@ -63,6 +82,12 @@ export const BrigadeItem: FC<IBrigadeProps> = ({ team, expandedTeams, toggleTeam
                     ))}
                 </div>
             )}
+            { isOpen && <ConfirmModal 
+            isOpen={isOpen} 
+            title='Вы действительно хотите удалить бригаду?' 
+            onClose={() => dispatch(closeModal())}
+            onConfirm={() => handleDeleteBrigade(team.id)}
+            /> }
         </div>
     )
 }

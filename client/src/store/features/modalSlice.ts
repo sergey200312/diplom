@@ -1,17 +1,17 @@
+import { EmployeeList } from './../../components/EmployeeList';
 // modalSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IEmployee } from '../../types/employee';
 
 interface IBrigade {
-  name: string;
-  leader: IEmployee;
-  members: IEmployee[];
-  specialization: string;
+  id: string
+  name: string
+  Employees: IEmployee[]
 }
 
 interface IModalState {
   isOpen: boolean;
-  type: 'createEmployee' | 'editEmployee' | 'createBrigade' | null;
+  type: 'createEmployee' | 'editEmployee' | 'createBrigade' | 'confirm' | 'editBrigade' | null;
   employeeData: IEmployee | null;
   brigadeData: IBrigade | null;
 }
@@ -27,20 +27,15 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openCreateEmployeeModal(state) {
+    openModal(state, action: PayloadAction<{
+      type: 'createEmployee' | 'editEmployee' | 'createBrigade' | 'confirm' | 'editBrigade';
+      employeeData?: IEmployee;
+      brigadeData?: IBrigade;
+    }>) {
       state.isOpen = true;
-      state.type = 'createEmployee';
-      state.employeeData = null;
-    },
-    openEditEmployeeModal(state, action: PayloadAction<IEmployee>) {
-      state.isOpen = true;
-      state.type = 'editEmployee';
-      state.employeeData = action.payload;
-    },
-    openCreateBrigadeModal(state) {
-      state.isOpen = true;
-      state.type = 'createBrigade';
-      state.brigadeData = null;
+      state.type = action.payload.type;
+      state.employeeData = action.payload.employeeData || null;
+      state.brigadeData = action.payload.brigadeData || null;
     },
     closeModal(state) {
       state.isOpen = false;
@@ -51,10 +46,5 @@ const modalSlice = createSlice({
   }
 })
 
-export const {
-  openCreateEmployeeModal,
-  openEditEmployeeModal,
-  openCreateBrigadeModal,
-  closeModal
-} = modalSlice.actions;
+export const { openModal, closeModal } = modalSlice.actions;
 export default modalSlice.reducer;

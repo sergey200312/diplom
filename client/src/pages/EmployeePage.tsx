@@ -8,7 +8,7 @@ import useDebounce from '../hooks/useDebounce'
 import EmployeeModal from '../components/EmployeeModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store/createStore'
-import { openCreateEmployeeModal } from '../store/features/modalSlice'
+import { openModal } from '../store/features/modalSlice'
 import ReactPaginate from 'react-paginate'
 import { Paginate } from '../components/Paginate'
 
@@ -53,7 +53,7 @@ export const EmployeePage: FC = () => {
           />
           <button
             className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-            onClick={() => dispatch(openCreateEmployeeModal())}
+            onClick={() => dispatch(openModal({ type: 'createEmployee'}))}
           >
             <span className="text-xl">＋</span> Добавить сотрудника
           </button>

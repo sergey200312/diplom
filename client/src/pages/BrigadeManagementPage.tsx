@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { MainLayout } from '../layout/MainLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import { openCreateBrigadeModal } from '../store/features/modalSlice';
 import { RootState } from '../store/createStore';
 import CreateBrigadeModal from '../components/CreateBrigadeModal';
 import { useGetAllBrigadesQuery } from '../store/api/brigadeApi';
 import { Paginate } from '../components/Paginate';
 import { BrigadeList } from '../components/BrigadeList';
+import { openModal } from '../store/features/modalSlice';
 
 const BrigadeManagementPage = () => {
     const [expandedTeams, setExpandedTeams] = useState<Record<number, boolean>>({});
@@ -19,7 +19,7 @@ const BrigadeManagementPage = () => {
     });
 
     const dispatch = useDispatch();
-    const modalIsOpen = useSelector((state: RootState) => state.modal.isOpen);
+    const { isOpen, type } = useSelector((state: RootState) => state.modal);
 
     const toggleTeamExpansion = (teamId: number) => {
         setExpandedTeams(prev => ({
@@ -35,7 +35,7 @@ const BrigadeManagementPage = () => {
                     <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow">
                         <button
                             className="max-w-1/2 mb-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                            onClick={() => dispatch(openCreateBrigadeModal())}
+                            onClick={() => dispatch(openModal({ type: 'createBrigade'}))}
                         >
                             СОЗДАТЬ БРИГАДУ
                         </button>
@@ -70,7 +70,8 @@ const BrigadeManagementPage = () => {
                     </div>
                 </div>
             </div>
-            {modalIsOpen && <CreateBrigadeModal />}
+            {isOpen && type === 'createBrigade' && <CreateBrigadeModal />}
+            {isOpen && type}
         </MainLayout>
     );
 };
